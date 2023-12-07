@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails employe</title>
+</head>
+<body>
+
+    <h1>Modifier employé</h1>
+    <div>
+        <form th:action="@{/employes/modifier/{id}(id=${employe.id})}" method="post" th:object="${employe}">
+            <input type="text" id="id" name="id" th:value="${employe.id}" hidden>
+
+            <label for="prenom">Prenom:</label>
+            <input type="text" id="prenom" name="prenom" th:value="${employe.prenom}">
+
+            <label for="nom">Nom:</label>
+            <input type="text" id="nom" name="nom" th:value="${employe.nom}">
+
+            <label for="poste">Poste:</label>
+            <input type="text" id="poste" name="poste" th:value="${employe.poste}">
+
+            <label for="dateEmbauche">Date d'embauche:</label>
+            <input type="date" id="dateEmbauche" name="dateEmbauche" th:value="${employe.dateEmbauche}" >
+            
+            <button type="submit">Valider</button>
+            
+
+        </form>
+    <h2>projets</h2>
+            <ul>
+                <li th:each="projet : ${employe.projets}">
+                    <span th:text="${projet.nom}"></span>
+                </li>
+            </ul>
+        
+    </div>
+
+    <br>
+    
+    <div>
+        <a th:href="@{/employes}">Liste employés</a>
+    </div>
+
+</body>
+</html>

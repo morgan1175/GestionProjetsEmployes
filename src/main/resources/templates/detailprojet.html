@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails projet</title>
+</head>
+<body>
+
+    <h1>Détails projet</h1>
+
+    <div th:if="${projet != null}">
+        <p><strong>Nom :</strong> <span th:text="${projet.nom}"></span></p>
+        <p><strong>Date début :</strong> <span th:text="${projet.dateDebut}"></span></p>
+        <p><strong>Date fin :</strong> <span th:text="${projet.dateFin}"></span></p>
+        
+        <h2>Equipe</h2>
+        <ul>
+            <li th:each="employe : ${projet.equipe}">
+                <span th:text="${employe.nom}+' '+${employe.prenom}"></span>
+            </li>
+        </ul>
+    </div>
+
+    <div th:unless="${projet != null}">
+        <p>Le projet n'existe pas.</p>
+    </div>
+    <div>
+        <a th:href="@{/projets}">Liste projets</a>
+    </div>
+
+</body>
+</html>

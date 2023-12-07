@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home</title>
+    <!-- <link rel="stylesheet" type="text/css" href="/static/css/styleemploye.css"> -->
+</head>
+<body>
+    <h2>Employees List</h2>
+    
+    <a th:href="@{/home}">Home</a>
+    <a th:href="@{/employes/ajouter}">Add Employee</a>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Poste</th>
+                <th>Date Entrée</th>
+                <th>Projets</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="employe : ${employes}" >
+                <td th:text="${employe.id}" ></td>
+                <td th:text="${employe.prenom}"></td>
+                <td th:text="${employe.nom}"></td>
+                <td th:text="${employe.poste}"></td>
+                <td th:text="${employe.dateEmbauche}"></td>
+                <td>
+                    <ul>
+                        <li th:each="projet : ${employe.projets}" th:text="${projet.nom}"></li>
+                    </ul>
+                </td>
+                <!-- URL /home/detail?id -->
+                <!-- <td><a th:href="@{/home/detail(id=${employee.id})}">Detail</a></td> -->
+                <!-- URL /home/detail/id -->
+                <td><a th:href="@{employes/detail/{id}(id=${employe.id})}">Detail</a></td>
+                <td><a th:href="@{employes/modifier/{id}(id=${employe.id})}">Modifier</a></td>
+                <td>
+                    <form th:action="@{/home/supprimer/{id}(id=${employe.id})}" method="post">
+                        <!-- balise input pour l'ID employee -->
+                        <input type="hidden" name="id" th:value="${employe.id}" />
+                        <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?')">Effacer</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/employes/ajoutprojet}" method="post">
+                        <input type="hidden" id="id" name="employeId" th:value="${employe.id}">
+                        <select id="projet" name="projet">
+                            <option th:each="projet : ${projets}" th:value="${projet.id}" th:text="${projet.getNom()}"></option>
+                        </select>
+                        <button type="submit">Ajouter Projet</button>
+                     </form>
+                </td>
+
+                <td>
+                    <form th:action="@{/employes/enleverprojet}" method="post">
+                        <input type="hidden" id="id" name="employeId" th:value="${employe.id}">
+                        <select id="projet" name="projet">
+                            <option th:each="projet : ${employe.projets}" th:value="${projet.id}" th:text="${projet.getNom()}"></option>
+                        </select>
+                        <button type="submit">Enlever Projet</button>
+                     </form>
+                </td>
+                
+                
+                
+            </tr>
+        </tbody>
+    </table>
+    
+</body>
+</html>
