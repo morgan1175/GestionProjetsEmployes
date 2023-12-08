@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails projet</title>
+</head>
+<body>
+    <h1>Ajouter un projet</h1>
+    <div>
+        <form th:action="@{/projets/ajouter}" method="post" th:object="${projet}">
+            <input type="text" id="id" name="id" th:value="${projet.id}" hidden>
+
+            <label for="nom">Nom:</label>
+            <input type="text" id="nom" name="nom" th:value="${projet.nom}">
+
+            <label for="datedebut">Date Début:</label>
+            <input type="date" id="datedebut" name="dateDebut" th:value="${projet.dateDebut}">
+
+            <label for="datefin">Date Fin:</label>
+            <input type="date" id="datefin" name="dateFin" th:value="${projet.dateFin}">
+            
+            <button type="submit">Valider</button>
+        </form>
+    </div>
+
+    <br>
+    
+    <div>
+        <a th:href="@{/projets}">Liste projets</a>
+    </div>
+</body>
+</html>

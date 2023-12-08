@@ -44,6 +44,29 @@ public class Projet implements Serializable {
 		this.dateFin = dateFin;
 		this.equipe = equipe;
 	}
+	
+	// Methodes pour gerer la relation de maniere bidirectionnelle
+		public void addEmploye(Employe employe) {
+			equipe.add(employe);
+			employe.getProjets().add(this);
+		}
+
+		public void removeEmploye(Employe employe) {
+			equipe.remove(employe);
+			employe.getProjets().remove(this);
+		}
+
+		// Méthode pour supprimer les employés des projets sans supprimer les employes
+		public void removeProjetsEmployes() {
+			if (!equipe.isEmpty()) {
+				for (Employe employe:equipe) {
+					employe.getProjets().remove(this);
+				}
+				equipe.clear();
+			}
+		}
+
+		//////////////////////////////////////////////////////////////
 
 	public Long getId() {
 		return id;

@@ -52,7 +52,7 @@ public class Employe implements Serializable {
 		projet.getEquipe().remove(this);
 	}
 
-	// Méthode pour supprimer l'employé des projets sans supprimer les projets
+	// Méthode pour supprimer les projets des employes sans supprimer les projets eux memes
 	public void removeEmployeProjets() {
 		if (!projets.isEmpty()) {
 			for (Projet projet : projets) {

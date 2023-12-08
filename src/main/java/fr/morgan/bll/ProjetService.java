@@ -15,6 +15,8 @@ public interface ProjetService {
 	void addProjet(Projet projet);
 	void deleteProjet(Projet projet);
 	Projet modifyProjet(Long id, Projet projet);
-	List<Employe> getEquipe();
+	Projet addEmploye(Long ProjectId,Employe employe);
+	Projet removeEmploye(Long ProjectId,Employe employe);
+	
 	
 }

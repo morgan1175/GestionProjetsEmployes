@@ -25,28 +25,43 @@ public class ProjetServiceImp implements ProjetService {
 		return projetRepository.findById(id).get();
 	}
 
+		
+	@Override
+	public Projet addEmploye(Long ProjectId, Employe employe) {
+		Projet projet = projetRepository.findById(ProjectId).get();
+		projet.addEmploye(employe);
+		projetRepository.save(projet);
+		return projet;
+	}
+	
+	
+
+	@Override
+	public Projet removeEmploye(Long ProjectId, Employe employe) {
+		Projet projet = projetRepository.findById(ProjectId).get();
+		projet.removeEmploye(employe);
+		projetRepository.save(projet);
+		return projet;
+	}
+	
+
 	@Override
 	public void addProjet(Projet projet) {
-		// TODO Auto-generated method stub
+		projetRepository.save(projet);
 		
 	}
 
 	@Override
 	public void deleteProjet(Projet projet) {
-		// TODO Auto-generated method stub
+		projetRepository.delete(projet);
 		
 	}
 
 	@Override
 	public Projet modifyProjet(Long id, Projet projet) {
-		// TODO Auto-generated method stub
-		return null;
+		projetRepository.save(projet);
+		return projet;
 	}
 
-	@Override
-	public List<Employe> getEquipe() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 }

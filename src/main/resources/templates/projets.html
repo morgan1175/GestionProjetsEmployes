@@ -17,6 +17,7 @@
                 <th>Nom</th>
                 <th>Date début</th>
                 <th>Date fin</th>
+                <th>Equipe</th>
             </tr>
         </thead>
         <tbody>
@@ -25,17 +26,40 @@
                 <td th:text="${projet.nom}"></td>
                 <td th:text="${projet.dateDebut}"></td>
                 <td th:text="${projet.dateFin}"></td>
+                <td>
+                    <ul>
+                        <li th:each="employe : ${projet.equipe}" th:text="${employe.prenom+' '+employe.nom}"></li>
+                    </ul>
+                </td>
                 <!-- URL /home/detail?id -->
                 <!-- <td><a th:href="@{/home/detail(id=${projet.id})}">Detail</a></td> -->
                 <!-- URL /home/detail/id -->
                 <td><a th:href="@{/projets/detail/{id}(id=${projet.id})}">Detail</a></td>
-                <td><a th:href="@{/home/modifier(id=${projet.id})}">Modifier</a></td>
+                <td><a th:href="@{/projets/modifier/{id}(id=${projet.id})}">Modifier</a></td>
                 <td>
-                    <form th:action="@{/home/supprimer/{id}(id=${projet.id})}" method="post">
+                    <form th:action="@{/projets/supprimer/{id}(id=${projet.id})}" method="post">
                         <!-- balise input pour l'ID projet -->
                         <input type="hidden" name="id" th:value="${projet.id}" />
                         <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?')">Effacer</button>
                     </form>
+                </td>
+                <td>
+                    <form th:action="@{/projets/ajoutemploye}" method="post">
+                        <input type="hidden" id="id" name="projetId" th:value="${projet.id}">
+                        <select id="employe" name="employe">
+                            <option th:each="employe : ${employes}" th:value="${employe.id}" th:text="${employe.getNom()}"></option>
+                        </select>
+                        <button type="submit">Ajouter Employe</button>
+                     </form>
+                </td>
+                <td>
+                    <form th:action="@{/projets/enleveremploye}" method="post">
+                        <input type="hidden" id="id" name="projetId" th:value="${projet.id}">
+                        <select id="employe" name="employe">
+                            <option th:each="employe : ${projet.equipe}" th:value="${employe.id}" th:text="${employe.getNom()}"></option>
+                        </select>
+                        <button type="submit">Enlever Employe</button>
+                     </form>
                 </td>
                 
                 
