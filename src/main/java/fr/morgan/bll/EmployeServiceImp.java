@@ -17,7 +17,7 @@ public class EmployeServiceImp implements EmployeService {
 	public EmployeRepository employeRepository;
 
 	@Autowired
-	ProjetRepository projetRepository;
+	public ProjetRepository projetRepository;
 
 	@Override
 	public List<Employe> getEmployes() {
@@ -35,6 +35,26 @@ public class EmployeServiceImp implements EmployeService {
 		employeRepository.save(employe);
 		return employe;
 	}
+	
+	
+
+	@Override
+	public Employe removeProject(Long EmployeId, Projet projet) {
+		Employe employe = employeRepository.findById(EmployeId).get();
+		employe.removeProjet(projet);
+		employeRepository.save(employe);
+		return employe;
+	}
+	
+	
+
+	@Override
+	public Employe removeAllProjects(Long employeId) {
+		Employe employe=employeRepository.findById(employeId).get();
+		employe.removeEmployeProjets();
+		employeRepository.save(employe);
+		return employe;
+	}
 
 	@Override
 	public Employe getEmploye(Long id) {
@@ -44,23 +64,27 @@ public class EmployeServiceImp implements EmployeService {
 	@Override
 	public void addEmploye(Employe employe) {
 		employeRepository.save(employe);
-
 	}
 
 	@Override
-	public void Delete(Employe employe) {
+	public void delete(Employe employe) {
 		employeRepository.delete(employe);
-
 	}
 
 	@Override
 	public Employe modifyEmploye(Long id, Employe employe) {
 		return employeRepository.save(employe);
 	}
+	
+	@Override
+	public List<Projet> getAllProjects() {
+		return projetRepository.findAll();
+	}
 
 	@Override
-	public List<Projet> getProjects() {
-		return projetRepository.findAll();
+	public List<Projet> getEmployeProjects(Employe employe) {
+		List<Projet> projets = employe.getProjets();
+		return projets;
 	}
 
 	

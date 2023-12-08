@@ -41,7 +41,7 @@
                 <td><a th:href="@{employes/detail/{id}(id=${employe.id})}">Detail</a></td>
                 <td><a th:href="@{employes/modifier/{id}(id=${employe.id})}">Modifier</a></td>
                 <td>
-                    <form th:action="@{/home/supprimer/{id}(id=${employe.id})}" method="post">
+                    <form th:action="@{/employes/supprimer/{id}(id=${employe.id})}" method="post">
                         <!-- balise input pour l'ID employee -->
                         <input type="hidden" name="id" th:value="${employe.id}" />
                         <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?')">Effacer</button>

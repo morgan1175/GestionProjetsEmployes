@@ -7,7 +7,6 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,13 +25,12 @@ public class Employe implements Serializable {
 	private String poste;
 	@Column(name = "date_embauche")
 	private LocalDate dateEmbauche;
-	@ManyToMany(mappedBy = "equipe", fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "equipe")
 	private List<Projet> projets = new ArrayList<Projet>();
 
 	public Employe() {
 		super();
 	}
-	
 
 	public Employe(String nom, String prenom, String poste, LocalDate dateEmbauche, List<Projet> projets) {
 		super();
@@ -43,7 +41,6 @@ public class Employe implements Serializable {
 		this.projets = projets;
 	}
 
-
 	// Methodes pour gerer la relation de maniere bidirectionnelle
 	public void addProjet(Projet projet) {
 		projets.add(projet);
@@ -53,6 +50,16 @@ public class Employe implements Serializable {
 	public void removeProjet(Projet projet) {
 		projets.remove(projet);
 		projet.getEquipe().remove(this);
+	}
+
+	// Méthode pour supprimer l'employé des projets sans supprimer les projets
+	public void removeEmployeProjets() {
+		if (!projets.isEmpty()) {
+			for (Projet projet : projets) {
+				projet.getEquipe().remove(this);
+			}
+			projets.clear();
+		}
 	}
 
 	//////////////////////////////////////////////////////////////
@@ -96,35 +103,18 @@ public class Employe implements Serializable {
 		this.dateEmbauche = dateEmbauche;
 	}
 
-	public List<Projet> getListeProjet() {
-		return projets;
-	}
-
-	public void setListeProjet(List<Projet> listeProjet) {
-		this.projets = listeProjet;
-	}
-
-
 	public List<Projet> getProjets() {
 		return projets;
 	}
-
 
 	public void setProjets(List<Projet> projets) {
 		this.projets = projets;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Employe [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", poste=" + poste + ", dateEmbauche="
-				+ dateEmbauche + ", projets=" + projets + "]";
+				+ dateEmbauche + "]";
 	}
-
-	
-
-	
-	
-	
 
 }

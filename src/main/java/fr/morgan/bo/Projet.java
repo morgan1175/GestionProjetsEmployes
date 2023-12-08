@@ -7,7 +7,6 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,7 +28,7 @@ public class Projet implements Serializable {
 	@Column(name = "date_fin")
 	private LocalDate dateFin;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(name = "projet_equipe", joinColumns = @JoinColumn(name = "projet_id"), inverseJoinColumns = @JoinColumn(name = "employe_id"))
 	private List<Employe> equipe = new ArrayList<Employe>();
 
@@ -88,8 +87,7 @@ public class Projet implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Projet [id=" + id + ", nom=" + nom + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", equipe="
-				+ equipe +  "]";
+		return "Projet [id=" + id + ", nom=" + nom + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin +  "]";
 	}
 
 }

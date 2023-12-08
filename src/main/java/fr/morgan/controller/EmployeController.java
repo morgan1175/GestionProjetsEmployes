@@ -27,7 +27,7 @@ public class EmployeController {
 	@GetMapping
 	private String listeEmployes(Model model) {
 		model.addAttribute("employes", employeService.getEmployes());
-		model.addAttribute("projets", employeService.getProjects());
+		model.addAttribute("projets", employeService.getAllProjects());
 		return "employes";
 	}
 
@@ -41,7 +41,12 @@ public class EmployeController {
 	public String ajouterProjet(@RequestParam ("employeId") Long id, @ModelAttribute Projet projet) {
 		employeService.addProject(id,projet);
 		return "redirect:/employes";
-
+	}
+	
+	@PostMapping("/enleverprojet")
+	public String enleverProjet(@RequestParam ("employeId") Long id,@ModelAttribute Projet projet) {
+		employeService.removeProject(id, projet);
+		return "redirect:/employes";
 	}
 	
 	@GetMapping("/modifier/{id}")
@@ -56,13 +61,26 @@ public class EmployeController {
 		return "redirect:/employes";
 	}
 	
+	@PostMapping("supprimer/{id}")
+	public String supprimerEmploye(@PathVariable("id") Long id) {
+		Employe employeAeffacer = employeService.getEmploye(id);
+		employeService.removeAllProjects(id);
+		employeService.delete(employeAeffacer);
+		return "redirect:/employes";
+	}
 	
+	@GetMapping("/ajouter")
+	public String ajouterEmploye(Model model) {
+		Employe employe = new Employe();
+		model.addAttribute("employe", employe);
+		return "ajoutemploye";
+	}
 	
+	@PostMapping("/ajouter")
+	public String postAjouterEmploye(@ModelAttribute Employe employe) {
+		employeService.addEmploye(employe);
+		return "redirect:/employes";
+	}
 	
-	
-	
-	
-	
-	
-	
+
 }
